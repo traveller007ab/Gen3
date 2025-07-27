@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-Mobile Gen 3 - Premium Experience</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d3e 70%, #8b4513 100%);
+      color: #e0e0e0;
+      font-family: 'Arial', sans-serif;
+      overflow-x: hidden;
+    }
+    .hero {
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      background: url('https://i.imgur.com/YOUR_IMAGE_URL_HERE.jpg') no-repeat center center;
+      background-size: cover;
+      opacity: 0.9;
+    }
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .shape {
+      position: absolute;
+      background: rgba(255, 64, 64, 0.2);
+    }
+    .shape-1 { width: 300px; height: 300px; border-radius: 50%; top: -10%; left: -10%; }
+    .shape-2 { width: 200px; height: 200px; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); background: rgba(255, 215, 0, 0.2); top: 20%; right: 10%; }
+    .shape-3 { width: 150px; height: 150px; clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); background: rgba(74, 144, 226, 0.2); bottom: 10%; left: 20%; }
+    .dot {
+      width: 12px;
+      height: 12px;
+      background-color: #ffd700;
+      border-radius: 50%;
+      position: absolute;
+      opacity: 0.8;
+    }
+    .nav-link {
+      color: #a0a0b0;
+      text-decoration: none;
+      margin: 0 15px;
+      transition: color 0.3s;
+    }
+    .nav-link:hover {
+      color: #d3d3e0;
+    }
+    .feature-card {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    .multicolor-text {
+      background: linear-gradient(45deg, #ff4040, #ffd700, #a0b0c0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="absolute top-5 left-5">
+      <img src="logo.png" alt="Logo" class="h-12">
+    </div>
+    <div class="absolute top-5 right-5 flex space-x-6">
+      <a href="#features" class="nav-link text-lg">Features</a>
+      <a href="#specs" class="nav-link text-lg">Specs</a>
+      <a href="#order" class="nav-link text-lg">Order Now</a>
+    </div>
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="hero-content">
+      <h1 class="text-7xl md:text-9xl font-bold mb-6 leading-tight multicolor-text">
+        Hello.<br>
+        I am<br>
+        K-Mobile<br>
+        Gen 3
+      </h1>
+      <p class="text-xl text-[#b0c0d0] mb-8 max-w-2xl mx-auto">Elevate your lifestyle with cutting-edge technology crafted for the elite.</p>
+      <a href="#order" class="bg-[#ff4040] text-white px-8 py-4 rounded-full text-lg hover:bg-[#e62e2e] transition-all duration-300">Explore Pricing</a>
+    </div>
+    <div class="dot" style="top: 15%; left: 5%;"></div>
+    <div class="dot" style="top: 45%; left: 15%;"></div>
+    <div class="dot" style="top: 65%; right: 10%;"></div>
+  </div>
+
+  <section id="features" class="py-20 bg-[#25253d] text-center">
+    <h2 class="text-5xl mb-12 multicolor-text font-semibold">Key Features</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-7xl mx-auto px-6">
+      <div class="feature-card p-8 bg-[#2d2d3e] rounded-xl transform hover:-translate-y-4 transition-all duration-300">
+        <h3 class="text-3xl mb-4 text-[#a0b0c0]">Stunning Display</h3>
+        <p class="text-lg text-[#b0c0d0]">7.6" AMOLED, 1400x3200 resolution for unmatched clarity.</p>
+      </div>
+      <div class="feature-card p-8 bg-[#2d2d3e] rounded-xl transform hover:-translate-y-4 transition-all duration-300">
+        <h3 class="text-3xl mb-4 text-[#a0b0c0]">Advanced Camera</h3>
+        <p class="text-lg text-[#b0c0d0]">108MP + 72MP AI-enhanced for professional-grade photography.</p>
+      </div>
+      <div class="feature-card p-8 bg-[#2d2d3e] rounded-xl transform hover:-translate-y-4 transition-all duration-300">
+        <h3 class="text-3xl mb-4 text-[#a0b0c0]">Long Battery Life</h3>
+        <p class="text-lg text-[#b0c0d0]">7800mAh with fast charging for all-day power.</p>
+      </div>
+      <div class="feature-card p-8 bg-[#2d2d3e] rounded-xl transform hover:-translate-y-4 transition-all duration-300">
+        <h3 class="text-3xl mb-4 text-[#a0b0c0]">Powerful Performance</h3>
+        <p class="text-lg text-[#b0c0d0]">8GB RAM, 256GB storage, Snapdragon 8 Gen 3.</p>
+      </div>
+      <div class="feature-card p-8 bg-[#2d2d3e] rounded-xl transform hover:-translate-y-4 transition-all duration-300">
+        <h3 class="text-3xl mb-4 text-[#a0b0c0]">Connectivity</h3>
+        <p class="text-lg text-[#b0c0d0]">5G LTE, dual SIM + micro SD slot, Android 14.</p>
+      </div>
+      <div class="feature-card p-8 bg-[#2d2d3e] rounded-xl transform hover:-translate-y-4 transition-all duration-300">
+        <h3 class="text-3xl mb-4 text-[#a0b0c0]">Security</h3>
+        <p class="text-lg text-[#b0c0d0]">Screen fingerprint unlock for seamless access.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="order" class="py-20 bg-[#2d2d3e] text-center">
+    <h2 class="text-5xl mb-10 multicolor-text font-semibold">Secure Your Phone Now</h2>
+    <p class="text-xl text-[#b0c0d0] mb-6">Limited stock - Order within 24 hours!</p>
+    <p class="text-lg text-[#b0c0d0] mb-8">Starting at 250,000 Naira or as low as 21,000 Naira/month with our flexible plan.</p>
+    <button class="bg-[#ff4040] text-white px-8 py-4 rounded-full text-xl hover:bg-[#e62e2e] transition-all duration-300">Choose Your Plan</button>
+  </section>
+
+  <script>
+    gsap.from(".hero h1", { opacity: 0, y: 60, duration: 1.8, ease: "power3.out" });
+    gsap.from(".hero p", { opacity: 0, y: 40, duration: 1.8, delay: 0.6, ease: "power3.out" });
+    gsap.from(".hero a", { opacity: 0, y: 40, duration: 1.8, delay: 1.2, ease: "power3.out" });
+    gsap.from(".shape", { opacity: 0, scale: 0.5, duration: 1.5, stagger: 0.3, ease: "elastic.out" });
+    gsap.from(".dot", { opacity: 0, scale: 0, duration: 1.2, stagger: 0.3, ease: "back.out" });
+    gsap.utils.toArray(".feature-card").forEach(card => {
+      card.addEventListener("mouseenter", () => gsap.to(card, { scale: 1.05, duration: 0.3 }));
+      card.addEventListener("mouseleave", () => gsap.to(card, { scale: 1, duration: 0.3 }));
+    });
+  </script>
+</body>
+</html>
