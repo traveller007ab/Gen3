@@ -1,214 +1,1027 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-Mobile Gen 3 - Premium Experience</title>
+  <title>K-Mobile Gen 3 - The Ultimate Premium Experience</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/ScrollTrigger.min.js"></script>
   <style>
-    body {
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d3e 70%, #8b4513 100%);
-      color: #e0e0e0;
-      font-family: 'Arial', sans-serif;
-      overflow-x: hidden;
+    :root {
+      --primary-dark: #1a1a1a;
+      --secondary-dark: #2d2d3e;
+      --accent-red: #ff4040;
+      --accent-gold: #ffd700;
+      --text-light: #e0e0e0;
+      --text-muted: #b0c0d0;
+      --text-dark-blue: #a0b0c0;
+      --brownish: #8b4513;
     }
+
+    body {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 70%, var(--brownish) 100%);
+      color: var(--text-light);
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Hero Section */
     .hero {
       height: 100vh;
       position: relative;
       overflow: hidden;
-      background: url('https://i.imgur.com/YOUR_IMAGE_URL_HERE.jpg') no-repeat center center;
-      background-size: cover;
-      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .hero-content {
+
+    /* Changed from hero-video-bg to hero-image-bg and adjusted opacity */
+    .hero-image-bg {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3; /* Adjusted opacity to make the phones visible but not overshadow text */
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7); /* Darker overlay for text readability */
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative; /* Ensure content is above overlay and image */
       z-index: 2;
-      background: rgba(0, 0, 0, 0.6);
+      text-align: center;
       padding: 20px;
       border-radius: 10px;
     }
+
     .shape {
       position: absolute;
       background: rgba(255, 64, 64, 0.2);
+      z-index: 1;
     }
     .shape-1 { width: 300px; height: 300px; border-radius: 50%; top: -10%; left: -10%; }
     .shape-2 { width: 200px; height: 200px; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); background: rgba(255, 215, 0, 0.2); top: 20%; right: 10%; }
     .shape-3 { width: 150px; height: 150px; clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); background: rgba(74, 144, 226, 0.2); bottom: 10%; left: 20%; }
+
     .dot {
       width: 12px;
       height: 12px;
-      background-color: #ffd700;
+      background-color: var(--accent-gold);
       border-radius: 50%;
       position: absolute;
       opacity: 0.8;
+      z-index: 1;
     }
+
+    /* Navigation */
     .nav-link {
-      color: #a0a0b0;
+      color: var(--text-dark-blue);
       text-decoration: none;
       margin: 0 15px;
-      transition: color 0.3s;
+      transition: color 0.3s, transform 0.2s;
+      position: relative;
     }
     .nav-link:hover {
-      color: #d3d3e0;
+      color: var(--text-light);
+      transform: translateY(-2px);
     }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--accent-red);
+      transition: width 0.3s ease-out;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Feature Cards */
     .feature-card {
+      background: var(--secondary-dark);
+      border-radius: 1rem;
+      padding: 2rem;
       transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
     .feature-card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      border-color: rgba(255, 255, 255, 0.15);
     }
+    .feature-card h3 {
+      color: var(--text-dark-blue);
+    }
+    .feature-card p {
+      color: var(--text-muted);
+    }
+
+    /* Multicolored Text */
     .multicolor-text {
-      background: linear-gradient(45deg, #ff4040, #ffd700, #a0b0c0);
+      background: linear-gradient(45deg, var(--accent-red), var(--accent-gold), var(--text-dark-blue));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      animation: gradient-shift 5s ease infinite alternate;
     }
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: var(--accent-red);
+      color: white;
+      padding: 0.8rem 2.5rem;
+      border-radius: 9999px;
+      font-size: 1.125rem;
+      transition: all 0.3s ease-in-out;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-primary:hover {
+      background: #e62e2e;
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 15px rgba(255, 64, 64, 0.4);
+    }
+    .btn-secondary {
+        background: none;
+        color: var(--accent-gold);
+        border: 2px solid var(--accent-gold);
+        padding: 0.8rem 2.5rem;
+        border-radius: 9999px;
+        font-size: 1.125rem;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn-secondary:hover {
+        background: rgba(255, 215, 0, 0.1);
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 15px rgba(255, 215, 0, 0.2);
+    }
+
+    /* Scroll Down Indicator */
+    .scroll-down {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-light);
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: bounce 2s infinite;
+      z-index: 2;
+    }
+    .scroll-down svg {
+      margin-top: 5px;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+    /* Chart Styling */
     #specChart {
-      max-width: 600px;
-      margin: 0 auto;
+      max-width: 700px;
+      margin: 4rem auto;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Testimonials Carousel */
+    .testimonial-carousel {
+        position: relative;
+        overflow: hidden;
+    }
+    .testimonial-container {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+    .testimonial-item {
+        min-width: 100%; /* Each item takes full width */
+        box-sizing: border-box;
+    }
+    .carousel-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 10;
+        font-size: 1.5rem;
+        transition: background 0.3s;
+    }
+    .carousel-control:hover {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    .carousel-prev { left: 1rem; }
+    .carousel-next { right: 1rem; }
+
+    /* FAQ Section */
+    .faq-item {
+        background: var(--secondary-dark);
+        border-radius: 0.75rem;
+        margin-bottom: 1rem;
+        overflow: hidden;
+    }
+    .faq-question {
+        width: 100%;
+        padding: 1.25rem 1.5rem;
+        background: var(--secondary-dark);
+        color: var(--text-light);
+        text-align: left;
+        font-weight: 600;
+        font-size: 1.25rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        border: none;
+        transition: background 0.3s;
+    }
+    .faq-question:hover {
+        background: rgba(45, 45, 62, 0.8);
+    }
+    .faq-question .icon {
+        transition: transform 0.3s ease;
+    }
+    .faq-question[aria-expanded="true"] .icon {
+        transform: rotate(45deg); /* Plus to X */
+    }
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-out;
+        padding: 0 1.5rem;
+        color: var(--text-muted);
+    }
+    .faq-answer p {
+        padding-bottom: 1.25rem;
+        line-height: 1.6;
+    }
+
+    /* Modal for Feature Details (simplified) */
+    .feature-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .feature-modal.open {
+        opacity: 1;
+        visibility: visible;
+    }
+    .feature-modal-content {
+        background: var(--primary-dark);
+        padding: 2rem;
+        border-radius: 1rem;
+        max-width: 800px;
+        width: 90%;
+        position: relative;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+    }
+    .feature-modal.open .feature-modal-content {
+        transform: translateY(0);
+    }
+    .feature-modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 2rem;
+        cursor: pointer;
     }
   </style>
 </head>
 <body>
   <div class="hero">
-    <div class="absolute top-5 left-5">
-      <img src="logo.png" alt="Logo" class="h-12">
+    <!-- Replaced video with image for prominent display of your product -->
+    <img src="uploaded:Messenger_creation_ABC9A6B2-6DC9-4D07-8CF2-F769BA293DC9[1].jpeg-a29d190c-c76c-42f5-818f-6155ee243d47" alt="K-Mobile Gen 3 Phones - White and Red" class="hero-image-bg">
+    <div class="hero-overlay"></div>
+
+    <div class="absolute top-6 left-6 z-20">
+      <img src="https://via.placeholder.com/150x50/3d3d5e/e0e0e0?text=K-Mobile+Logo" alt="K-Mobile Logo" class="h-12 w-auto">
     </div>
-    <div class="absolute top-5 right-5 flex space-x-6">
-      <a href="#features" class="nav-link text-lg">Features</a>
-      <a href="#specs" class="nav-link text-lg">Specs</a>
-      <a href="#order" class="nav-link text-lg">Order Now</a>
-    </div>
+    <nav class="absolute top-6 right-6 flex space-x-4 md:space-x-8 z-20">
+      <a href="#features" class="nav-link text-base md:text-lg" aria-label="Explore K-Mobile Gen 3 Features">Features</a>
+      <a href="#specs" class="nav-link text-base md:text-lg" aria-label="View K-Mobile Gen 3 Specifications">Specs</a>
+      <a href="#testimonials" class="nav-link text-base md:text-lg" aria-label="Read K-Mobile Gen 3 Testimonials">Reviews</a>
+      <a href="#order" class="nav-link text-base md:text-lg" aria-label="Order K-Mobile Gen 3 Now">Order Now</a>
+    </nav>
+
     <div class="shape shape-1"></div>
     <div class="shape shape-2"></div>
     <div class="shape shape-3"></div>
-    <div class="hero-content">
-      <h1 class="text-7xl md:text-9xl font-bold mb-6 leading-tight multicolor-text">
-        Hello.<br>
-        I am<br>
-        K-Mobile<br>
-        Gen 3
+    <div class="hero-content max-w-4xl mx-auto">
+      <h1 class="text-7xl md:text-9xl font-extrabold mb-6 leading-tight multicolor-text">
+        <span class="line1 block" aria-hidden="true">Hello.</span>
+        <span class="line2 block" aria-hidden="true">I am</span>
+        <span class="line3 block" aria-hidden="true">K-Mobile</span>
+        <span class="line4 block" aria-hidden="true">Gen 3</span>
       </h1>
-      <p class="text-xl text-[#b0c0d0] mb-8 max-w-2xl mx-auto">Elevate your lifestyle with cutting-edge technology crafted for the elite.</p>
-      <a href="#order" class="bg-[#ff4040] text-white px-8 py-4 rounded-full text-lg hover:bg-[#e62e2e] transition-all duration-300">Explore Pricing</a>
+      <p class="text-xl md:text-2xl text-[var(--text-muted)] mb-8 max-w-2xl mx-auto opacity-0 reveal-text">
+        Elevate your lifestyle with cutting-edge technology crafted for the elite.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+        <a href="#order" class="btn-primary opacity-0 reveal-btn">
+          Pre-order Now
+          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        </a>
+        <a href="#features" class="btn-secondary opacity-0 reveal-btn">
+          Learn More
+          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </a>
+      </div>
     </div>
     <div class="dot" style="top: 15%; left: 5%;"></div>
     <div class="dot" style="top: 45%; left: 15%;"></div>
     <div class="dot" style="top: 65%; right: 10%;"></div>
+
+    <a href="#features" class="scroll-down">
+        Scroll Down
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+    </a>
   </div>
 
-  <section id="features" class="py-20 bg-[#25253d] text-center">
-    <h2 class="text-5xl mb-12 multicolor-text font-semibold">Key Features</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-7xl mx-auto px-6">
-      <div class="feature-card p-8 bg-[#2d2d3e] rounded-xl transform hover:-translate-y-4 transition-all duration-300">
-        <h3 class="text-3xl mb-4 text-[#a0b0c0]">Stunning Display</h3>
-        <p class="text-lg text-[#b0c0d0]">7.6" AMOLED, 1400x3200 resolution for unmatched clarity.</p>
+  <section id="features" class="py-20 bg-[var(--primary-dark)] text-center">
+    <h2 class="text-5xl md:text-6xl mb-12 multicolor-text font-bold">Unleash Its Power</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-6">
+      <div class="feature-card" data-feature="display">
+        <h3 class="text-3xl mb-4">Stunning Display</h3>
+        <p class="text-lg">7.6" AMOLED, 1400x3200 resolution for unmatched clarity.</p>
       </div>
-      <div class="feature-card p-8 bg-[#2d2d3e] rounded-xl transform hover:-translate-y-4 transition-all duration-300">
-        <h3 class="text-3xl mb-4 text-[#a0b0c0]">Advanced Camera</h3>
-        <p class="text-lg text-[#b0c0d0]">108MP + 72MP AI-enhanced for professional-grade photography.</p>
+      <div class="feature-card" data-feature="camera">
+        <h3 class="text-3xl mb-4">Advanced Camera</h3>
+        <p class="text-lg">108MP + 72MP AI-enhanced for professional-grade photography.</p>
       </div>
-      <div class="feature-card p-8 bg-[#2d2d3e] rounded-xl transform hover:-translate-y-4 transition-all duration-300">
-        <h3 class="text-3xl mb-4 text-[#a0b0c0]">Long Battery Life</h3>
-        <p class="text-lg text-[#b0c0d0]">7800mAh with fast charging for all-day power.</p>
+      <div class="feature-card" data-feature="battery">
+        <h3 class="text-3xl mb-4">Long Battery Life</h3>
+        <p class="text-lg">7800mAh with fast charging for all-day power.</p>
       </div>
-      <div class="feature-card p-8 bg-[#2d2d3e] rounded-xl transform hover:-translate-y-4 transition-all duration-300">
-        <h3 class="text-3xl mb-4 text-[#a0b0c0]">Powerful Performance</h3>
-        <p class="text-lg text-[#b0c0d0]">8GB RAM, 256GB storage, Snapdragon 8 Gen 3.</p>
+      <div class="feature-card" data-feature="performance">
+        <h3 class="text-3xl mb-4">Powerful Performance</h3>
+        <p class="text-lg">8GB RAM, 256GB storage, Snapdragon 8 Gen 3.</p>
       </div>
-      <div class="feature-card p-8 bg-[#2d2d3e] rounded-xl transform hover:-translate-y-4 transition-all duration-300">
-        <h3 class="text-3xl mb-4 text-[#a0b0c0]">Connectivity</h3>
-        <p class="text-lg text-[#b0c0d0]">5G LTE, dual SIM + micro SD slot, Android 14.</p>
+      <div class="feature-card" data-feature="connectivity">
+        <h3 class="text-3xl mb-4">Seamless Connectivity</h3>
+        <p class="text-lg">5G LTE, dual SIM + micro SD slot, Android 14.</p>
       </div>
-      <div class="feature-card p-8 bg-[#2d2d3e] rounded-xl transform hover:-translate-y-4 transition-all duration-300">
-        <h3 class="text-3xl mb-4 text-[#a0b0c0]">Security</h3>
-        <p class="text-lg text-[#b0c0d0]">Screen fingerprint unlock for seamless access.</p>
+      <div class="feature-card" data-feature="security">
+        <h3 class="text-3xl mb-4">Fortified Security</h3>
+        <p class="text-lg">Screen fingerprint unlock for seamless and secure access.</p>
       </div>
     </div>
-    <div id="specChart" class="mt-12">
-      <canvas id="myChart"></canvas>
+
+    <!-- Feature Detail Modal (Hidden by default) -->
+    <div id="feature-modal" class="feature-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="feature-modal-content">
+            <button class="feature-modal-close" aria-label="Close feature details">&times;</button>
+            <h3 id="modal-title" class="text-4xl text-[var(--accent-gold)] mb-4"></h3>
+            <p id="modal-description" class="text-lg text-[var(--text-muted)] mb-6"></p>
+            <div id="modal-image-container" class="mb-6">
+                <!-- Image/Video specific to the feature will go here -->
+            </div>
+            <p class="text-sm text-gray-500">
+                This is a detailed overview of the <span id="modal-feature-name" class="font-semibold text-white"></span> feature.
+                Actual product experience may vary.
+            </p>
+        </div>
     </div>
   </section>
 
-  <section id="order" class="py-20 bg-[#2d2d3e] text-center">
-    <h2 class="text-5xl mb-10 multicolor-text font-semibold">Secure Your Phone Now</h2>
-    <p class="text-xl text-[#b0c0d0] mb-6">Limited stock - Order within 24 hours!</p>
-    <p class="text-lg text-[#b0c0d0] mb-8">Starting at 250,000 Naira or as low as 21,000 Naira/month with our flexible plan.</p>
-    <button class="bg-[#ff4040] text-white px-8 py-4 rounded-full text-xl hover:bg-[#e62e2e] transition-all duration-300">Choose Your Plan</button>
+  <section id="specs" class="py-20 bg-[var(--secondary-dark)] text-center">
+    <h2 class="text-5xl md:text-6xl mb-12 multicolor-text font-bold">Technical Specifications</h2>
+    <div id="specChart">
+      <canvas id="myChart" aria-label="K-Mobile Gen 3 vs Competitor Average Specifications"></canvas>
+    </div>
+    <div class="mt-16 max-w-4xl mx-auto px-6 text-left">
+        <h3 class="text-4xl text-[var(--text-dark-blue)] mb-6 font-semibold">Detailed Breakdown</h3>
+        <table class="w-full text-lg bg-[var(--primary-dark)] rounded-xl overflow-hidden shadow-lg">
+            <tbody class="divide-y divide-gray-700">
+                <tr class="hover:bg-gray-800">
+                    <td class="p-4 font-semibold text-[var(--accent-gold)]">Display</td>
+                    <td class="p-4">7.6-inch Dynamic AMOLED XDR, 1400 x 3200 pixels, 120Hz adaptive refresh rate, HDR10+, 2000 nits peak brightness</td>
+                </tr>
+                <tr class="hover:bg-gray-800">
+                    <td class="p-4 font-semibold text-[var(--accent-gold)]">Processor</td>
+                    <td class="p-4">Qualcomm Snapdragon 8 Gen 3 (4nm), Octa-core CPU, Adreno 750 GPU</td>
+                </tr>
+                <tr class="hover:bg-gray-800">
+                    <td class="p-4 font-semibold text-[var(--accent-gold)]">RAM & Storage</td>
+                    <td class="p-4">8GB / 12GB LPDDR5X RAM, 256GB / 512GB UFS 4.0 storage (expandable via microSD up to 1TB)</td>
+                </tr>
+                <tr class="hover:bg-gray-800">
+                    <td class="p-4 font-semibold text-[var(--accent-gold)]">Rear Camera</td>
+                    <td class="p-4">Triple-lens setup: 108MP (wide, OIS) + 72MP (ultrawide) + 32MP (telephoto, 3x optical zoom), AI photography modes, 8K video recording</td>
+                </tr>
+                <tr class="hover:bg-gray-800">
+                    <td class="p-4 font-semibold text-[var(--accent-gold)]">Front Camera</td>
+                    <td class="p-4">40MP (wide), Dual Pixel AF, 4K video recording</td>
+                </tr>
+                <tr class="hover:bg-gray-800">
+                    <td class="p-4 font-semibold text-[var(--accent-gold)]">Battery</td>
+                    <td class="p-4">7800 mAh (typical), 100W SuperVOOC fast charging, 50W wireless charging, 10W reverse wireless charging</td>
+                </tr>
+                <tr class="hover:bg-gray-800">
+                    <td class="p-4 font-semibold text-[var(--accent-gold)]">Operating System</td>
+                    <td class="p-4">Android 14 with K-OS 3.0 Custom UI</td>
+                </tr>
+                <tr class="hover:bg-gray-800">
+                    <td class="p-4 font-semibold text-[var(--accent-gold)]">Connectivity</td>
+                    <td class="p-4">5G (SA/NSA), Wi-Fi 7, Bluetooth 5.4, GPS, NFC, USB-C 3.2</td>
+                </tr>
+                <tr class="hover:bg-gray-800">
+                    <td class="p-4 font-semibold text-[var(--accent-gold)]">Security</td>
+                    <td class="p-4">Under-display ultrasonic fingerprint sensor, facial recognition</td>
+                </tr>
+                <tr class="hover:bg-gray-800">
+                    <td class="p-4 font-semibold text-[var(--accent-gold)]">Dimensions & Weight</td>
+                    <td class="p-4">165 x 75 x 8.5 mm, 220g (approx.)</td>
+                </tr>
+                <tr class="hover:bg-gray-800">
+                    <td class="p-4 font-semibold text-[var(--accent-gold)]">Colors</td>
+                    <td class="p-4">Cosmic Black, Aurora Gold, Stellar Silver</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
   </section>
+
+  <section id="testimonials" class="py-20 bg-[var(--primary-dark)] text-center">
+    <h2 class="text-5xl md:text-6xl mb-12 multicolor-text font-bold">What Our Users Say</h2>
+    <div class="testimonial-carousel max-w-5xl mx-auto px-6 relative">
+        <div class="testimonial-container" id="testimonial-container">
+            <div class="testimonial-item p-8 bg-[var(--secondary-dark)] rounded-xl shadow-lg m-4">
+                <p class="text-2xl italic text-[var(--text-muted)] mb-6">"The K-Mobile Gen 3 is simply revolutionary. The display clarity and camera quality are unmatched. Truly a premium device!"</p>
+                <p class="text-xl font-semibold text-[var(--accent-gold)]">- Aisha K., Lagos</p>
+            </div>
+            <div class="testimonial-item p-8 bg-[var(--secondary-dark)] rounded-xl shadow-lg m-4">
+                <p class="text-2xl italic text-[var(--text-muted)] mb-6">"Battery life is insane! I can go two days without charging, even with heavy use. Plus, the performance is just butter smooth."</p>
+                <p class="text-xl font-semibold text-[var(--accent-gold)]">- Emeka N., Abuja</p>
+            </div>
+            <div class="testimonial-item p-8 bg-[var(--secondary-dark)] rounded-xl shadow-lg m-4">
+                <p class="text-2xl italic text-[var(--text-muted)] mb-6">"As a professional photographer, the AI-enhanced camera changed my workflow. The detail and dynamic range are incredible. Highly recommend!"</p>
+                <p class="text-xl font-semibold text-[var(--accent-gold)]">- David O., Port Harcourt</p>
+            </div>
+            <!-- NEW TESTIMONIAL WITH VIDEO -->
+            <div class="testimonial-item p-8 bg-[var(--secondary-dark)] rounded-xl shadow-lg m-4 flex flex-col items-center">
+                <p class="text-2xl italic text-[var(--text-muted)] mb-6 text-center">"Just unboxed my new K-Mobile Gen 3! The design is stunning and the unboxing experience felt truly premium. Can't wait to dive in!"</p>
+                <video controls preload="metadata" class="w-full max-w-sm rounded-lg shadow-md mb-4" aria-label="K-Mobile Gen 3 unboxing video review">
+                    <source src="uploaded:Messenger_creation_E2AE99A2-D9DB-42F5-A602-482DCA8B4C8B[1].mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p class="text-xl font-semibold text-[var(--accent-gold)]">- Jessica W., Online Review</p>
+            </div>
+        </div>
+        <button class="carousel-control carousel-prev" id="prev-testimonial" aria-label="Previous Testimonial">❮</button>
+        <button class="carousel-control carousel-next" id="next-testimonial" aria-label="Next Testimonial">❯</button>
+    </div>
+  </section>
+
+  <section id="order" class="py-20 bg-[var(--secondary-dark)] text-center">
+    <h2 class="text-5xl md:text-6xl mb-10 multicolor-text font-bold">Secure Your K-Mobile Gen 3 Now</h2>
+    <p class="text-xl text-[var(--text-muted)] mb-6">
+        Limited Stock Remaining! <span class="font-semibold text-[var(--accent-gold)]">Pre-order within:</span>
+    </p>
+    <div id="countdown" class="flex justify-center items-center text-4xl md:text-5xl font-bold mb-8 text-[var(--accent-red)] space-x-4">
+        <span id="days">00<span class="block text-base text-[var(--text-muted)] font-normal">Days</span></span>:
+        <span id="hours">00<span class="block text-base text-[var(--text-muted)] font-normal">Hrs</span></span>:
+        <span id="minutes">00<span class="block text-base text-[var(--text-muted)] font-normal">Mins</span></span>:
+        <span id="seconds">00<span class="block text-base text-[var(--text-muted)] font-normal">Secs</span></span>
+    </div>
+    <p class="text-2xl text-[var(--text-light)] mb-8">
+        Starting at <span class="font-bold text-[var(--accent-gold)]">₦250,000</span> or as low as <span class="font-bold text-[var(--accent-gold)]">₦21,000/month</span> with our flexible payment plan.
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-12">
+        <a href="#" class="btn-primary">
+            Choose Your Plan
+            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+        </a>
+        <a href="#" class="btn-secondary">
+            Contact Sales
+            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+        </a>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-6 mt-16">
+        <h3 class="text-4xl text-[var(--text-dark-blue)] mb-8 font-semibold">Frequently Asked Questions</h3>
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
+                    What is the estimated delivery time?
+                    <span class="icon text-3xl">+</span>
+                </button>
+                <div id="faq-answer-1" class="faq-answer">
+                    <p>Deliveries within Nigeria are estimated to take 3-7 business days after order confirmation. International shipping times may vary.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
+                    Do you offer financing options?
+                    <span class="icon text-3xl">+</span>
+                </button>
+                <div id="faq-answer-2" class="faq-answer">
+                    <p>Yes, we partner with reputable financial institutions to offer flexible monthly payment plans starting from ₦21,000. You can explore these options when you choose your plan.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
+                    What is your return policy?
+                    <span class="icon text-3xl">+</span>
+                </button>
+                <div id="faq-answer-3" class="faq-answer">
+                    <p>We offer a 14-day money-back guarantee from the date of delivery, provided the device is in its original condition and packaging. Please refer to our full return policy for details.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-4">
+                    Is there a warranty included?
+                    <span class="icon text-3xl">+</span>
+                </button>
+                <div id="faq-answer-4" class="faq-answer">
+                    <p>All K-Mobile Gen 3 devices come with a standard 1-year manufacturer's warranty covering defects in materials and workmanship.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-6 mt-16 text-center">
+        <h3 class="text-4xl text-[var(--text-dark-blue)] mb-6 font-semibold">Stay Updated!</h3>
+        <p class="text-xl text-[var(--text-muted)] mb-8">
+            Be the first to know about K-Mobile news, exclusive offers, and future product launches.
+        </p>
+        <form class="flex flex-col sm:flex-row gap-4 justify-center">
+            <input type="email" placeholder="Enter your email address" class="flex-grow p-4 rounded-full bg-[var(--primary-dark)] border border-gray-700 text-[var(--text-light)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)]" required aria-label="Email for newsletter signup">
+            <button type="submit" class="btn-primary px-8">Subscribe</button>
+        </form>
+    </div>
+
+    <div class="mt-16 text-center">
+        <h3 class="text-3xl text-[var(--text-dark-blue)] mb-6 font-semibold">Share Your Excitement!</h3>
+        <div class="flex justify-center space-x-6">
+            <a href="https://twitter.com/intent/tweet?text=Check%20out%20the%20revolutionary%20K-Mobile%20Gen%203!%20%23KMobileGen3%20%23PremiumTech&url=[YourPageURL]" target="_blank" class="text-[var(--text-light)] hover:text-blue-400 transition-colors" aria-label="Share on Twitter">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.714 11.24h-7.693l-5.454-7.015l-6.566 7.015H.75L9.73 12.91L.256 2.25H8.08L12 7.502L18.244 2.25zM17.29 20l-1.153-.081L8.75 4.38h2.2L17.29 20z"></path></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=[YourPageURL]" target="_blank" class="text-[var(--text-light)] hover:text-blue-600 transition-colors" aria-label="Share on Facebook">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.262c-1.225 0-1.628.765-1.628 1.563V12h2.773l-.443 2.89h-2.33V22H12c5.523 0 10-4.477 10-10z"></path></svg>
+            </a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=[YourPageURL]&title=K-Mobile%20Gen%203%20-%20The%20Ultimate%20Premium%20Experience" target="_blank" class="text-[var(--text-light)] hover:text-blue-700 transition-colors" aria-label="Share on LinkedIn">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 0h24v24H0z" fill="none"></path><path d="M18.335 18.339H15.67v-3.722c0-.895-.016-2.05-.125-2.788c-.105-.737-.62-1.33-1.61-1.33c-1.234 0-1.42 1.07-1.42 2.712v3.722H9.273V9.27h2.544v1.107h.036c.353-.665 1.218-1.36 2.472-1.36C18.423 9.018 19 10.65 19 13.529v4.81H18.335zM5.63 7.859c-.958 0-1.73-.77-1.73-1.722c0-.95.772-1.72 1.73-1.72s1.73.77 1.73 1.72c0 .952-.772 1.722-1.73 1.722zM6.905 18.339H4.35V9.27h2.555v9.069z"></path></svg>
+            </a>
+        </div>
+    </div>
+  </section>
+
+  <footer class="bg-[var(--primary-dark)] py-12 text-center text-[var(--text-muted)]">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div>
+                <h4 class="text-xl font-semibold text-[var(--text-light)] mb-4">K-Mobile Technologies</h4>
+                <p>Leading the future of mobile innovation.</p>
+                <p class="mt-2">Aba, Abia, Nigeria</p>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold text-[var(--text-light)] mb-4">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li><a href="#features" class="hover:text-[var(--accent-gold)] transition-colors">Features</a></li>
+                    <li><a href="#specs" class="hover:text-[var(--accent-gold)] transition-colors">Specifications</a></li>
+                    <li><a href="#order" class="hover:text-[var(--accent-gold)] transition-colors">Pre-order</a></li>
+                    <li><a href="#testimonials" class="hover:text-[var(--accent-gold)] transition-colors">Testimonials</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xl font-semibold text-[var(--text-light)] mb-4">Contact Us</h4>
+                <p>Email: <a href="mailto:info@kmobile.com" class="hover:text-[var(--accent-gold)] transition-colors">info@kmobile.com</a></p>
+                <p>Phone: <a href="tel:+2348012345678" class="hover:text-[var(--accent-gold)] transition-colors">+234 801 234 5678</a></p>
+                <div class="flex justify-center space-x-4 mt-4">
+                    <!-- Social Media Icons (replace with actual links) -->
+                    <a href="#" class="hover:text-[var(--accent-gold)] transition-colors" aria-label="K-Mobile on Twitter"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.714 11.24h-7.693l-5.454-7.015l-6.566 7.015H.75L9.73 12.91L.256 2.25H8.08L12 7.502L18.244 2.25zM17.29 20l-1.153-.081L8.75 4.38h2.2L17.29 20z"></path></svg></a>
+                    <a href="#" class="hover:text-[var(--accent-gold)] transition-colors" aria-label="K-Mobile on Facebook"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.262c-1.225 0-1.628.765-1.628 1.563V12h2.773l-.443 2.89h-2.33V22H12c5.523 0 10-4.477 10-10z"></path></svg></a>
+                    <a href="#" class="hover:text-[var(--accent-gold)] transition-colors" aria-label="K-Mobile on Instagram"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zm-.2 2A4.8 4.8 0 003 7.6v8.8A4.8 4.8 0 007.6 21.6h8.8a4.8 4.8 0 004.6-4.6V7.6A4.8 4.8 0 0016.4 3.4H7.6zm9.4 0c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5zm-5 4c-3.313 0-6 2.687-6 6s2.687 6 6 6 6-2.687 6-6-2.687-6-6-6zm0 2c2.206 0 4 1.794 4 4s-1.794 4-4 4-4-1.794-4-4 1.794-4 4-4z"></path></svg></a>
+                </div>
+            </div>
+        </div>
+        <p class="text-sm mt-8">&copy; <span id="current-year"></span> K-Mobile Technologies. All rights reserved.</p>
+        <p class="text-xs mt-2">Designed and Developed by [Your Name/Company Name]</p>
+    </div>
+  </footer>
 
   <script>
+    // GSAP ScrollTrigger plugin registration
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Dynamic Copyright Year
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // GSAP Animations
+    const heroTl = gsap.timeline();
+
+    // Hero Text Animation (char-by-char or word-by-word would be more complex, line-by-line is efficient)
+    heroTl.from(".hero .line1", { opacity: 0, y: 50, duration: 1.2, ease: "power3.out" })
+          .from(".hero .line2", { opacity: 0, y: 50, duration: 1.2, ease: "power3.out" }, "-=0.8")
+          .from(".hero .line3", { opacity: 0, y: 50, duration: 1.2, ease: "power3.out" }, "-=0.8")
+          .from(".hero .line4", { opacity: 0, y: 50, duration: 1.2, ease: "power3.out" }, "-=0.8")
+          .from(".hero .reveal-text", { opacity: 0, y: 30, duration: 1.2, ease: "power3.out" }, "-=0.8")
+          .from(".hero .reveal-btn", { opacity: 0, y: 30, duration: 1, ease: "power3.out", stagger: 0.2 }, "-=0.8")
+          .from(".shape", { opacity: 0, scale: 0.5, duration: 1.5, stagger: 0.3, ease: "elastic.out" }, "-=1.5")
+          .from(".dot", { opacity: 0, scale: 0, duration: 1.2, stagger: 0.3, ease: "back.out(1.7)" }, "-=1.2")
+          .from(".scroll-down", { opacity: 0, y: 20, duration: 1, ease: "power2.out" }, "-=0.5");
+
+    // Feature Card hover animation (using GSAP for more control)
+    gsap.utils.toArray(".feature-card").forEach(card => {
+        gsap.to(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: "top 80%", // When top of card enters 80% of viewport
+                end: "bottom top",
+                toggleActions: "play none none none"
+            },
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            clearProps: "all" // Remove inline styles after animation completes
+        });
+        card.addEventListener("mouseenter", () => gsap.to(card, { scale: 1.03, duration: 0.3, overwrite: true }));
+        card.addEventListener("mouseleave", () => gsap.to(card, { scale: 1, duration: 0.3, overwrite: true }));
+    });
+
     // Chart.js configuration
     const ctx = document.getElementById('myChart').getContext('2d');
-    new Chart(ctx, {
+    const myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Battery (mAh)', 'Camera (MP)', 'Display (Inches)'],
+        labels: ['Battery (mAh)', 'Camera (MP, Combined)', 'Display (Inches)'],
         datasets: [{
           label: 'K-Mobile Gen 3',
           data: [7800, 180, 7.6],
-          backgroundColor: '#ff4040',
-          borderColor: '#ffd700',
-          borderWidth: 2
+          backgroundColor: 'var(--accent-red)',
+          borderColor: 'var(--accent-gold)',
+          borderWidth: 2,
+          borderRadius: 5,
         }, {
           label: 'Competitor Avg.',
           data: [6000, 120, 6.8],
-          backgroundColor: '#a0b0c0',
-          borderColor: '#8b4513',
-          borderWidth: 2
+          backgroundColor: 'rgba(160, 176, 192, 0.7)', /* var(--text-dark-blue) with opacity */
+          borderColor: 'var(--brownish)',
+          borderWidth: 2,
+          borderRadius: 5,
         }]
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            labels: {
+              color: 'var(--text-light)',
+              font: {
+                size: 14,
+                family: 'Poppins'
+              }
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            titleFont: {
+                family: 'Poppins',
+                size: 16
+            },
+            bodyFont: {
+                family: 'Poppins',
+                size: 14
+            },
+            callbacks: {
+                label: function(context) {
+                    let label = context.dataset.label || '';
+                    if (label) {
+                        label += ': ';
+                    }
+                    if (context.parsed.y !== null) {
+                        label += context.parsed.y.toLocaleString();
+                    }
+                    if (context.label === 'Camera (MP, Combined)') {
+                        label += ' MP';
+                    } else if (context.label === 'Display (Inches)') {
+                        label += ' inches';
+                    } else if (context.label === 'Battery (mAh)') {
+                        label += ' mAh';
+                    }
+                    return label;
+                }
+            }
+          }
+        },
         scales: {
           y: {
             beginAtZero: true,
             title: {
               display: true,
               text: 'Value',
-              color: '#e0e0e0'
+              color: 'var(--text-light)',
+              font: {
+                family: 'Poppins',
+                size: 16
+              }
             },
             ticks: {
-              color: '#e0e0e0'
+              color: 'var(--text-muted)',
+              font: {
+                family: 'Poppins'
+              }
+            },
+            grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
             }
           },
           x: {
             title: {
               display: true,
               text: 'Specifications',
-              color: '#e0e0e0'
+              color: 'var(--text-light)',
+              font: {
+                family: 'Poppins',
+                size: 16
+              }
             },
             ticks: {
-              color: '#e0e0e0'
-            }
-          }
-        },
-        plugins: {
-          legend: {
-            labels: {
-              color: '#e0e0e0'
+              color: 'var(--text-muted)',
+              font: {
+                family: 'Poppins'
+              }
+            },
+            grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
             }
           }
         }
       }
     });
 
-    // GSAP animations
-    gsap.from(".hero h1", { opacity: 0, y: 60, duration: 1.8, ease: "power3.out" });
-    gsap.from(".hero p", { opacity: 0, y: 40, duration: 1.8, delay: 0.6, ease: "power3.out" });
-    gsap.from(".hero a", { opacity: 0, y: 40, duration: 1.8, delay: 1.2, ease: "power3.out" });
-    gsap.from(".shape", { opacity: 0, scale: 0.5, duration: 1.5, stagger: 0.3, ease: "elastic.out" });
-    gsap.from(".dot", { opacity: 0, scale: 0, duration: 1.2, stagger: 0.3, ease: "back.out" });
-    gsap.utils.toArray(".feature-card").forEach(card => {
-      card.addEventListener("mouseenter", () => gsap.to(card, { scale: 1.05, duration: 0.3 }));
-      card.addEventListener("mouseleave", () => gsap.to(card, { scale: 1, duration: 0.3 }));
+    // Countdown Timer
+    const countdownElement = document.getElementById('countdown');
+    const daysElement = document.getElementById('days');
+    const hoursElement = document.getElementById('hours');
+    const minutesElement = document.getElementById('minutes');
+    const secondsElement = document.getElementById('seconds');
+
+    // Set the end date for the countdown (e.g., 2 days from now)
+    // Adjust this target date for a real scenario
+    let countdownDate = new Date();
+    countdownDate.setDate(countdownDate.getDate() + 2); // 2 days from today
+    countdownDate.setHours(countdownDate.getHours() + 10); // +10 hours
+    countdownDate.setMinutes(countdownDate.getMinutes() + 30); // +30 minutes
+    countdownDate.setSeconds(countdownDate.getSeconds() + 45); // +45 seconds
+    countdownDate = countdownDate.getTime(); // Get time in milliseconds
+
+    const updateCountdown = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = countdownDate - now;
+
+        if (distance < 0) {
+            clearInterval(updateCountdown);
+            countdownElement.innerHTML = "<span class='text-[var(--accent-red)]'>Offer Expired!</span>";
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        daysElement.innerHTML = `${String(days).padStart(2, '0')}<span class="block text-base text-[var(--text-muted)] font-normal">Days</span>`;
+        hoursElement.innerHTML = `${String(hours).padStart(2, '0')}<span class="block text-base text-[var(--text-muted)] font-normal">Hrs</span>`;
+        minutesElement.innerHTML = `${String(minutes).padStart(2, '0')}<span class="block text-base text-[var(--text-muted)] font-normal">Mins</span>`;
+        secondsElement.innerHTML = `${String(seconds).padStart(2, '0')}<span class="block text-base text-[var(--text-muted)] font-normal">Secs</span>`;
+    }, 1000);
+
+
+    // Testimonial Carousel
+    const testimonialContainer = document.getElementById('testimonial-container');
+    const prevBtn = document.getElementById('prev-testimonial');
+    const nextBtn = document.getElementById('next-testimonial');
+    let currentIndex = 0;
+
+    function updateCarousel() {
+        // Calculate total width of all items including margins
+        let totalItemsWidth = 0;
+        Array.from(testimonialContainer.children).forEach(item => {
+            totalItemsWidth += item.offsetWidth + (parseFloat(window.getComputedStyle(item).marginLeft) * 2);
+        });
+
+        // Ensure carousel doesn't move beyond its bounds
+        const visibleContainerWidth = testimonialContainer.parentElement.offsetWidth; // Width of the parent (viewport)
+        const maxScroll = totalItemsWidth - visibleContainerWidth;
+
+        // Ensure currentIndex does not go out of bounds for scrolling logic
+        // If there's only one item, maxScroll might be negative or zero,
+        // so ensure currentIndex doesn't try to scroll.
+        if (maxScroll <= 0) {
+            currentIndex = 0; // No scrolling needed or possible
+        } else if (currentIndex * testimonialContainer.children[0].offsetWidth > maxScroll) {
+             // Adjust currentIndex if it goes beyond the scrollable area
+            currentIndex = Math.floor(maxScroll / testimonialContainer.children[0].offsetWidth);
+        }
+
+        const scrollPosition = currentIndex * (testimonialContainer.children[0].offsetWidth + (parseFloat(window.getComputedStyle(testimonialContainer.children[0]).marginLeft) * 2));
+        testimonialContainer.style.transform = `translateX(-${scrollPosition}px)`;
+
+        // Adjust for responsiveness if items per view change
+        // For simplicity, current logic assumes single item scroll per click
+        // For multiple items per view, you'd need to calculate item sets
+    }
+
+
+    // Initialize carousel on load and resize
+    window.addEventListener('resize', updateCarousel);
+    window.addEventListener('load', updateCarousel);
+
+    nextBtn.addEventListener('click', () => {
+        if (currentIndex < testimonialContainer.children.length - 1) {
+            currentIndex++;
+        } else {
+            currentIndex = 0; // Loop back to start
+        }
+        updateCarousel();
     });
+
+    prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+        } else {
+            currentIndex = testimonialContainer.children.length - 1; // Loop to end
+        }
+        updateCarousel();
+    });
+
+    // FAQ Accordion
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            const isExpanded = question.getAttribute('aria-expanded') === 'true';
+
+            // Close all other open answers
+            document.querySelectorAll('.faq-question[aria-expanded="true"]').forEach(openQuestion => {
+                if (openQuestion !== question) {
+                    openQuestion.setAttribute('aria-expanded', 'false');
+                    openQuestion.nextElementSibling.style.maxHeight = 0;
+                }
+            });
+
+            // Toggle current answer
+            question.setAttribute('aria-expanded', !isExpanded);
+            if (!isExpanded) {
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            } else {
+                answer.style.maxHeight = 0;
+            }
+        });
+    });
+
+    // Feature Detail Modal (Simplified)
+    const featureCards = document.querySelectorAll('.feature-card');
+    const featureModal = document.getElementById('feature-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    const modalImageContainer = document.getElementById('modal-image-container');
+    const modalFeatureName = document.getElementById('modal-feature-name');
+    const closeModalBtn = document.querySelector('.feature-modal-close');
+
+    // Store the URL of your uploaded product image
+    const productImageURL = "uploaded:Messenger_creation_ABC9A6B2-6DC9-4D07-8CF2-F769BA293DC9[1].jpeg-a29d190c-c76c-42f5-818f-6155ee243d47";
+    const unboxingVideoURL = "uploaded:Messenger_creation_E2AE99A2-D9DB-42F5-A602-482DCA8B4C8B[1].mp4";
+
+
+    const featureData = {
+        display: {
+            title: "Unrivaled Visuals",
+            description: "Experience vibrant colors and incredible detail on the K-Mobile Gen 3's stunning 7.6-inch Dynamic AMOLED XDR display. With a 120Hz adaptive refresh rate and 2000 nits peak brightness, everything from movies to gaming comes to life like never before. Immerse yourself in true-to-life visuals.",
+            image: productImageURL, // Using the actual product image
+            name: "Stunning Display"
+        },
+        camera: {
+            title: "Capture Masterpieces",
+            description: "Equipped with a revolutionary 108MP main sensor and a 72MP ultrawide, the K-Mobile Gen 3's AI-enhanced camera system redefines mobile photography. From breathtaking landscapes to detailed portraits, achieve professional-grade results effortlessly. 8K video recording ensures your memories are captured in cinematic quality.",
+            image: productImageURL, // Using the actual product image
+            name: "Advanced Camera"
+        },
+        battery: {
+            title: "Power Through Your Day (and More)",
+            description: "Never worry about running out of power with the massive 7800mAh battery. Combined with 100W SuperVOOC fast charging, you'll go from empty to full in minutes. Wireless charging and reverse wireless charging add ultimate convenience, keeping all your devices powered.",
+            image: "https://via.placeholder.com/600x400/3d3d5e/a0b0c0?text=K-Mobile+Battery+Life", // Placeholder image for other features
+            name: "Long Battery Life"
+        },
+        performance: {
+            title: "Uncompromising Speed",
+            description: "The latest Snapdragon 8 Gen 3 processor coupled with 8GB/12GB LPDDR5X RAM delivers desktop-level performance. Multitask seamlessly, game without lag, and run demanding applications with ease. 256GB/512GB UFS 4.0 storage ensures lightning-fast app launches and file transfers.",
+            image: "https://via.placeholder.com/600x400/3d3d5e/2d2d3e?text=K-Mobile+Performance", // Placeholder image for other features
+            name: "Powerful Performance"
+        },
+        connectivity: {
+            title: "Always Connected, Always Fast",
+            description: "Experience blazing-fast internet with 5G LTE connectivity. Dual SIM support and a dedicated microSD slot give you flexibility for work and play. Running on the latest Android 14 with our intuitive K-OS 3.0, your digital life is more integrated than ever.",
+            image: "https://via.placeholder.com/600x400/3d3d5e/8b4513?text=K-Mobile+Connectivity", // Placeholder image for other features
+            name: "Seamless Connectivity"
+        },
+        security: {
+            title: "Your Data, Your Control",
+            description: "The K-Mobile Gen 3 ensures your privacy and data are always protected. Our advanced under-display ultrasonic fingerprint sensor provides instant and secure access, complemented by reliable facial recognition. Rest assured, your device is fortified.",
+            image: "https://via.placeholder.com/600x400/3d3d5e/ff4040?text=K-Mobile+Security", // Placeholder image for other features
+            name: "Fortified Security"
+        },
+    };
+
+    featureCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const featureType = card.dataset.feature;
+            const data = featureData[featureType];
+
+            if (data) {
+                modalTitle.textContent = data.title;
+                modalDescription.textContent = data.description;
+                modalFeatureName.textContent = data.name;
+                // Check if it's the unboxing video or a general image
+                if (featureType === 'unboxing_video') { // This part is hypothetical for the featureData structure, as currently video is in testimonial directly
+                    modalImageContainer.innerHTML = `<video controls preload="metadata" class="w-full h-auto rounded-lg shadow-md"><source src="${unboxingVideoURL}" type="video/mp4">Your browser does not support the video tag.</video>`;
+                } else {
+                    modalImageContainer.innerHTML = `<img src="${data.image}" alt="${data.name} Demonstration" class="w-full h-auto rounded-lg shadow-md">`;
+                }
+                featureModal.classList.add('open');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling background
+            }
+        });
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+        featureModal.classList.remove('open');
+        document.body.style.overflow = ''; // Restore scrolling
+    });
+
+    // Close modal if clicked outside content
+    featureModal.addEventListener('click', (event) => {
+        if (event.target === featureModal) {
+            featureModal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    });
+
   </script>
 </body>
 </html>
